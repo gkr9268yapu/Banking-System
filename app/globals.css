@@ -1,0 +1,43 @@
+@import "tailwindcss";
+
+/*
+  Design tokens taken from the reference screenshot.
+  Each --color-* name becomes a Tailwind class, for example:
+    --color-frame      ->  bg-frame, text-frame
+    --color-pastel-blue -> bg-pastel-blue
+*/
+@theme inline {
+  /* Page frame and surfaces */
+  --color-frame: #d9d0f2;       /* thin lavender frame around the app */
+  --color-surface: #f6f7fb;     /* stat cards and zebra rows */
+
+  /* Text */
+  --color-ink: #1c1c24;         /* main dark text */
+  --color-muted: #6b6b78;       /* small grey labels, nav text */
+
+  /* Pastel icon circles */
+  --color-pastel-blue: #b8ddf2;
+  --color-pastel-purple: #c9b8ec;
+  --color-pastel-orange: #f9bfa5;
+
+  /* Chart panels and bars */
+  --color-chart-blue-panel: #eaf1fa;
+  --color-chart-blue-bar: #b5dbf0;
+  --color-chart-purple-panel: #dfd9f0;
+  --color-chart-purple-bar: #c5b5e8;
+
+  /* Dark table card */
+  --color-night: #1c1c24;
+
+  /* Money colors: received = blue, sent = red */
+  --color-received: #4a78a8;
+  --color-sent: #b5442f;
+
+  --font-sans: var(--font-roboto);
+}
+
+body {
+  background: var(--color-frame);
+  color: var(--color-ink);
+  font-family: var(--font-roboto), system-ui, sans-serif;
+}
