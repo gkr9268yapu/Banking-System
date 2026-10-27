@@ -10,12 +10,17 @@ import { userMenu } from "@/lib/nav";
 type HeaderProps = {
   title: string;
   userName: string;
+  role: "customer" | "admin";
 };
 
 // Top bar inside the main area: page title on the left,
 // bell + avatar + name + dropdown on the right.
-export default function Header({ title, userName }: HeaderProps) {
+export default function Header({ title, userName, role }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
+
+  // The admin has no "My Account" page (it is for customers only), so the
+  // admin menu shows Settings, which holds the admin's profile.
+  const menuItems = role === "admin" ? userMenu.filter((item) => item.label === "Settings") : userMenu;
 
   return (
     <header className="flex items-center justify-between gap-4">
@@ -52,7 +57,7 @@ export default function Header({ title, userName }: HeaderProps) {
               onClick={() => setMenuOpen(false)}
             />
             <ul className="absolute right-0 top-full z-20 mt-3 w-44 rounded-xl bg-white py-2 shadow-lg ring-1 ring-black/5">
-              {userMenu.map((item) => (
+              {menuItems.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}

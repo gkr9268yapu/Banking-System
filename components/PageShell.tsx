@@ -24,19 +24,17 @@ export default function PageShell({
   children,
 }: PageShellProps) {
   return (
-    <div className="h-[100dvh] overflow-hidden p-1.5 pt-[max(0.375rem,env(safe-area-inset-top))] md:p-2">
-      <div className="flex h-full overflow-hidden rounded-3xl bg-white">
+    <div className="min-h-screen p-1.5 pt-[max(0.375rem,env(safe-area-inset-top))] md:p-2">
+      <div className="flex min-h-[calc(100vh-0.75rem)] overflow-hidden rounded-3xl bg-white md:min-h-[calc(100vh-1rem)]">
         <Sidebar role={role} activeHref={activeHref} />
 
         {/* min-w-0 stops wide content from stretching the page sideways */}
-        <main className="flex min-h-0 min-w-0 flex-1 flex-col px-5 pt-6 md:px-10 md:pt-8">
+        <main className="min-w-0 flex-1 px-5 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-6 md:px-10 md:pb-10 md:pt-8">
           {/* On phones there is no sidebar, so show the bank name here */}
           <p className="mb-4 text-xl text-ink md:hidden">{BANK_NAME}</p>
 
-          <Header title={title} userName={userName} />
-          <div className="mt-10 min-h-0 flex-1 overflow-y-auto overscroll-contain pb-[calc(6rem+env(safe-area-inset-bottom))] pr-1 space-y-10 md:pb-10">
-            {children}
-          </div>
+          <Header title={title} userName={userName} role={role} />
+          <div className="mt-10 space-y-10">{children}</div>
         </main>
       </div>
 

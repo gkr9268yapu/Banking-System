@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Roboto } from "next/font/google";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import { BANK_NAME } from "@/lib/config";
 import "./globals.css";
 
@@ -47,7 +48,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={roboto.variable}>
-      <body className="antialiased">{children}</body>
+      <body className="antialiased">
+        {children}
+        <ServiceWorkerRegister />
+      </body>
     </html>
   );
 }
