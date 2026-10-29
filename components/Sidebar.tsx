@@ -30,9 +30,8 @@ function SidebarLink({
   return (
     <Link
       href={href}
-      className={`relative flex items-center gap-3 px-8 py-2.5 text-[15px] ${
-        active ? "font-bold text-ink" : "text-muted hover:text-ink"
-      }`}
+      className={`relative flex items-center gap-3 px-8 py-2.5 text-[15px] ${active ? "font-bold text-ink" : "text-muted hover:text-ink"
+        }`}
     >
       {active && (
         <span className="absolute left-0 top-1/2 h-5 w-0.5 -translate-y-1/2 bg-ink" />
@@ -50,9 +49,9 @@ export default function Sidebar({ role, activeHref }: SidebarProps) {
   const items = role === "admin" ? adminNav : customerNav;
 
   return (
-    // The shell owns the viewport; keeping the sidebar outside the scrollable
-    // content region keeps it fixed while the page content scrolls.
-    <aside className="hidden h-full w-[230px] shrink-0 flex-col md:flex">
+    // The page itself no longer scrolls (see PageShell), so the sidebar simply
+    // fills the height. Settings and Log out stay at the bottom.
+    <aside className="hidden w-[230px] shrink-0 flex-col overflow-y-auto md:flex">
       <div className="px-8 pb-8 pt-8 text-[22px] text-ink">{BANK_NAME}</div>
 
       <nav className="flex flex-col gap-1.5">

@@ -24,17 +24,28 @@ export default function PageShell({
   children,
 }: PageShellProps) {
   return (
-    <div className="min-h-screen p-1.5 pt-[max(0.375rem,env(safe-area-inset-top))] md:p-2">
-      <div className="flex min-h-[calc(100vh-0.75rem)] overflow-hidden rounded-3xl bg-white md:min-h-[calc(100vh-1rem)]">
+    // The page itself never scrolls: it is exactly as tall as the screen (h-dvh).
+    // Only the content area in the middle scrolls, so the sidebar, the bank name
+    // and the header stay fixed in place.
+    <div className="h-dvh overflow-hidden p-1.5 pt-[max(0.375rem,env(safe-area-inset-top))] md:p-2">
+      <div className="flex h-full overflow-hidden rounded-3xl bg-white">
         <Sidebar role={role} activeHref={activeHref} />
 
         {/* min-w-0 stops wide content from stretching the page sideways */}
-        <main className="min-w-0 flex-1 px-5 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-6 md:px-10 md:pb-10 md:pt-8">
-          {/* On phones there is no sidebar, so show the bank name here */}
-          <p className="mb-4 text-xl text-ink md:hidden">{BANK_NAME}</p>
+        <main className="flex min-h-0 min-w-0 flex-1 flex-col">
+          {/* Fixed top part: bank name (phones) and header. z-20 keeps the
+              avatar menu above the scrolling content. */}
+          <div className="relative z-20 shrink-0 px-5 pb-4 pt-6 md:px-10 md:pt-8">
+            {/* On phones there is no sidebar, so show the bank name here */}
+            <p className="mb-4 text-xl text-ink md:hidden">{BANK_NAME}</p>
+            <Header title={title} userName={userName} role={role} />
+          </div>
 
-          <Header title={title} userName={userName} role={role} />
-          <div className="mt-10 space-y-10">{children}</div>
+          {/* The only part that scrolls. The padding at the bottom keeps the
+              last item clear of the phone's bottom bar. */}
+          <div className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-5 pb-[calc(6rem+env(safe-area-inset-bottom))] pt-6 md:px-10 md:pb-10">
+            <div className="space-y-10">{children}</div>
+          </div>
         </main>
       </div>
 
