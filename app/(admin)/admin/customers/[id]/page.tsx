@@ -11,6 +11,7 @@ import { requireUser } from "@/lib/auth";
 import { getInitials, typeLabel } from "@/lib/format";
 import { formatMoneyString } from "@/lib/money";
 import { getTransactions, parseFilters } from "@/lib/transactions";
+import ResetPasswordForm from "@/components/ResetPasswordForm";
 
 const tones = ["blue", "orange", "purple"] as const;
 
@@ -136,6 +137,16 @@ export default async function AdminCustomerDetailPage({
                     )}
                 </div>
             </section>
+
+            {/* Last section: the admin sets a new password (not for deleted customers). */}
+            {customer.status !== "DELETED" && (
+                <section>
+                    <SectionHeading>Reset password</SectionHeading>
+                    <div className="mt-6">
+                        <ResetPasswordForm userId={customer.userId} name={customer.fullName} />
+                    </div>
+                </section>
+            )}
         </PageShell>
     );
 }
