@@ -114,9 +114,9 @@ export async function getAdminTransactions(filters: AdminTxnFilters): Promise<Ad
     }
     if (filters.q) {
         // "!" is the escape character, so a typed % or _ is not a wildcard.
-        const like = `%${filters.q.replace(/[!%_]/g, "!$&")}%`;
+        const like = `%${filters.q.toLowerCase().replace(/[!%_]/g, "!$&")}%`;
         conditions.push(
-            `(fu.full_name LIKE ? ESCAPE '!' OR tu.full_name LIKE ? ESCAPE '!'
+            `(LOWER(fu.full_name) LIKE ? ESCAPE '!' OR LOWER(tu.full_name) LIKE ? ESCAPE '!'
         OR fa.account_number LIKE ? ESCAPE '!' OR ta.account_number LIKE ? ESCAPE '!')`,
         );
         params.push(like, like, like, like);

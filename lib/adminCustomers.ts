@@ -68,9 +68,9 @@ export async function listCustomers(filters: CustomerFilters): Promise<CustomerL
     if (filters.q) {
         // The search text goes in as a parameter. "!" is the escape character, so
         // a typed % or _ is searched as a normal character, not as a wildcard.
-        const like = `%${filters.q.replace(/[!%_]/g, "!$&")}%`;
+        const like = `%${filters.q.toLowerCase().replace(/[!%_]/g, "!$&")}%`;
         conditions.push(
-            `(u.full_name LIKE ? ESCAPE '!' OR u.email LIKE ? ESCAPE '!' OR a.account_number LIKE ? ESCAPE '!')`,
+            `(LOWER(u.full_name) LIKE ? ESCAPE '!' OR LOWER(u.email) LIKE ? ESCAPE '!' OR a.account_number LIKE ? ESCAPE '!')`,
         );
         params.push(like, like, like);
     }
